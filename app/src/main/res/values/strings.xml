@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UWA Timetable</string>
+    <string name="action_settings">Settings</string>
+    <string name="time_divider" translatable="false">-</string>
+    <string name="unit">Unit</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="type">Type</string>
+    <string name="venue">Venue</string>
+    <string name="stream">Stream</string>
+    <string name="weeks">Weeks</string>
+</resources>
