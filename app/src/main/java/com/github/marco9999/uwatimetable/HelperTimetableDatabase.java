@@ -1,12 +1,9 @@
 package com.github.marco9999.uwatimetable;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.IntegerRes;
 import android.util.Log;
 
 /**
@@ -77,6 +74,31 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
     // Timetable functions. //
     //////////////////////////
 
+    public enum SORT {
+        NONE, START_TIME, DAY, DAY_THEN_START_TIME
+    }
+
+    private String orderBy(SORT sortType) {
+        switch (sortType) {
+            case NONE:
+                return null;
+            case START_TIME:
+                return ("CAST(SUBSTR(" + ContractTimetableDatabase.COLUMN_CLASS_START_TIME + ",1,2) AS INTEGER) ASC");
+            case DAY:
+                return ("(CASE WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Sunday' THEN 1 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Monday' THEN 2 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Tuesday' THEN 3 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Wednesday' THEN 4 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Thursday' THEN 5 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Friday' THEN 6 "
+                            + "WHEN " + ContractTimetableDatabase.COLUMN_CLASS_DAY + " = 'Saturday' THEN 7 ELSE 8 END)");
+            case DAY_THEN_START_TIME:
+                return (orderBy(SORT.DAY) + ", " + orderBy(SORT.START_TIME));
+            default:
+                return null;
+        }
+    }
+
     boolean writeTimetableDBEntry(HolderTimetableEntry info) {
         assert (database != null);
         // info contains list of class entry parameters (in the order listed by ContractTimetableDatabase.SET_COLUMN_NAMES) through the ContentValues object underneath it.
@@ -106,10 +128,12 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         return hasSucceeded;
     }
 
-    HolderTimetableEntry[] readAllTimetableDBEntry() {
+    HolderTimetableEntry[] readAllTimetableDBEntry(SORT sortType) {
+        Log.d(Tag.LOG, "Executing timetable database query with SORT = " + sortType.toString());
+
         assert (database != null);
         // Get DB results.
-        Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, null, null, null, null, orderBy(sortType), null);
 
         // Allocate length of entryArray.
         HolderTimetableEntry[] entryArray = new HolderTimetableEntry[results.getCount()];
@@ -126,6 +150,8 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
 
         // Close results cursor.
         results.close();
+
+        Log.d(Tag.LOG, "Successfully executed database query. Number of entries = " + String.valueOf(entryArray.length));
 
         return entryArray;
     }

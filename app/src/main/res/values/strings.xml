@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">UWA Timetable</string>
     <string name="action_settings">Settings</string>
-    <string name="time_divider" translatable="false">-</string>
+    <string name="divider" translatable="false">-</string>
     <string name="unit">Unit</string>
     <string name="start">Start</string>
     <string name="end">End</string>
@@ -9,6 +9,7 @@
     <string name="venue">Venue</string>
     <string name="stream">Stream</string>
     <string name="weeks">Weeks</string>
+    <string name="day">Day</string>
     <string name="readFromCAS">Read From CAS</string>
     <string name="clearDatabase">Clear Database</string>
     <string name="title_clearDatabase">Clear Database?</string>

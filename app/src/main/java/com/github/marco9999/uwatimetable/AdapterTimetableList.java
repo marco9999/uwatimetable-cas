@@ -87,7 +87,7 @@ public class AdapterTimetableList extends BaseAdapter {
         UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
         assert (utilFragment != null);
         HelperTimetableDatabase helperTDB = utilFragment.getHelperTimetableDatabase();
-        entriesArray = helperTDB.readAllTimetableDBEntry();
+        entriesArray = helperTDB.readAllTimetableDBEntry(HelperTimetableDatabase.SORT.DAY_THEN_START_TIME);
         notifyDataSetChanged();
     }
 }
