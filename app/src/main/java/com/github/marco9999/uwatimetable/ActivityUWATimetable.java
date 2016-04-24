@@ -78,7 +78,7 @@ public class ActivityUWATimetable extends AppCompatActivity {
     // Action Functions. //
     ///////////////////////
 
-    void action_clearDatabase() {
+    private void action_clearDatabase() {
         // Recreate Database.
         DialogClearDatabase dialog = new DialogClearDatabase();
         dialog.show(getSupportFragmentManager(), Tag.Fragment.DIALOG_CLEARDATABASE);

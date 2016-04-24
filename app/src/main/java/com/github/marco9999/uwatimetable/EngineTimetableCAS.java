@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -25,7 +26,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails, Void, String> {
 
-    UtilRetainFragment utilRetainFragment;
+    private UtilRetainFragment utilRetainFragment;
 
     EngineTimetableCAS(UtilRetainFragment utilRetainFragment) {
         if (utilRetainFragment == null)
@@ -52,18 +53,18 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
     // CAS Timetable Functions. //
     //////////////////////////////
 
-    final String[] CAS_JSON_DATA_FIELDS = {"subject_code", "subject_description", "location", "activityType", "day_of_week", "start_date", "start_time", "duration", "activity_code", "week_pattern"};
-    final String CAS_WEBSITE = "https://allocateplussso.webservices.uwa.edu.au/allocateplussso.aspx";
-    final String USER_AGENT = "Mozilla/5.0";
+    private final String[] CAS_JSON_DATA_FIELDS = {"subject_code", "subject_description", "location", "activityType", "day_of_week", "start_date", "start_time", "duration", "activity_code", "week_pattern"};
+    private final String CAS_WEBSITE = "https://allocateplussso.webservices.uwa.edu.au/allocateplussso.aspx";
+    private final String USER_AGENT = "Mozilla/5.0";
 
-    Map<String, List<String>> htmlHeaders = new HashMap<>();
+    private Map<String, List<String>> htmlHeaders = new HashMap<>();
 
-    String postData1 = "SMENC=ISO-8859-1&SMLOCALE=US-EN&target=https%3A%2F%2Fallocateplussso.webservices.uwa.edu.au%2Fallocateplussso.aspx&smquerydata=&smauthreason=0&postpreservationdata=&USER=";
+    private final String postData1 = "SMENC=ISO-8859-1&SMLOCALE=US-EN&target=https%3A%2F%2Fallocateplussso.webservices.uwa.edu.au%2Fallocateplussso.aspx&smquerydata=&smauthreason=0&postpreservationdata=&USER=";
     // + userName
-    String postData2 = "&PASSWORD=";
+    private final String postData2 = "&PASSWORD=";
     // + userPass
 
-    HttpsURLConnection getBaseHttpsConn(String urlString, String method) throws Exception {
+    private HttpsURLConnection getBaseHttpsConn(String urlString, String method) throws Exception {
         HttpsURLConnection connection = (HttpsURLConnection) new URL(urlString).openConnection();
         connection.setInstanceFollowRedirects(false);
         connection.setUseCaches(false);
@@ -76,15 +77,15 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         return connection;
     }
 
-    Map<String, List<String>> getHtmlHeaders() {
+    private Map<String, List<String>> getHtmlHeaders() {
         return htmlHeaders;
     }
 
-    void setHtmlHeaders(Map<String, List<String>> htmlHeaders) {
+    private void setHtmlHeaders(Map<String, List<String>> htmlHeaders) {
         this.htmlHeaders.putAll(htmlHeaders);
     }
 
-    String getCookieRequestProperty() {
+    private String getCookieRequestProperty() {
         // Method to fix any non-spec reply header cookies.
         StringBuilder cookie = new StringBuilder();
         List<String> cookieList;
@@ -116,14 +117,14 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         }
     }
 
-    void writeHtmlPostData(HttpsURLConnection connection, String data) throws Exception {
+    private void writeHtmlPostData(HttpsURLConnection connection, String data) throws Exception {
         OutputStream wr = connection.getOutputStream();
         wr.write(data.getBytes("UTF-8"));
         wr.flush();
         wr.close();
     }
 
-    JSONObject getCASDataJsonObject(UserDetails userDetails) {
+    private JSONObject getCASDataJsonObject(UserDetails userDetails) {
         try {
             HttpsURLConnection casConn = null;
             int casConnCode;
@@ -198,7 +199,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         }
     }
 
-    HolderTimetableEntry[] getCASDataHolderObject(JSONObject jsonCasData) {
+    private HolderTimetableEntry[] getCASDataHolderObject(JSONObject jsonCasData) {
         HolderTimetableEntry[] entries;
         try {
             // Get "allocated" json object.
@@ -228,7 +229,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         }
     }
 
-    void fixClassWeek(HolderTimetableEntry[] data) {
+    private void fixClassWeek(HolderTimetableEntry[] data) {
         String dayOfWeek;
         String weekPattern;
         String startDate;
@@ -273,7 +274,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
             for (int i = 0; i < weekPattern.length(); i++) {
                 if (weekPattern.charAt(i) == '1') {
                     // If this is the first 1 encountered after a 0, need to start a new date block.
-                    if (inBlock == false) {
+                    if (!inBlock) {
                         inBlock = true;
                         blockStart = (Calendar) startCal.clone();
                         blockStart.add(Calendar.DATE, dayCount);
@@ -281,7 +282,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
 
                 } else {
                     // If this is the first 0 encountered after a 1, need to end the new date block.
-                    if (inBlock == true) {
+                    if (inBlock) {
                         inBlock = false;
                         blockEnd = (Calendar) startCal.clone();
                         blockEnd.add(Calendar.DATE, dayCount - 7); // Need to minus 7 here as the dayCount has already increased from the previous loop.
@@ -304,7 +305,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         }
     }
 
-    void fixClassDay(HolderTimetableEntry[] data) {
+    private void fixClassDay(HolderTimetableEntry[] data) {
         final String[] casDays = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         final String[] fixedDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
@@ -315,7 +316,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         }
     }
 
-    void fixClassEndTime(HolderTimetableEntry[] data) {
+    private void fixClassEndTime(HolderTimetableEntry[] data) {
         String startTime;
         String[] startTimeSplit; // {hh, mm}
         Integer[] startTimeSplitInt; // {hh, mm}
@@ -339,11 +340,11 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
 
             // Add on end time to start time to get the real end time in hh:mm.
             endTimeMinutes = startTimeSplitInt[1] + endTimeInt;
-            endTimeHours = startTimeSplitInt[0] + (int) (endTimeMinutes / 60);
-            endTimeMinutes = (int) (endTimeMinutes % 60);
+            endTimeHours = startTimeSplitInt[0] + endTimeMinutes / 60;
+            endTimeMinutes = endTimeMinutes % 60;
 
             // Set the end time data
-            data[i].put(ContractTimetableDatabase.COLUMN_CLASS_END_TIME, String.format("%02d", endTimeHours) + ":" + String.format("%02d", endTimeMinutes));
+            data[i].put(ContractTimetableDatabase.COLUMN_CLASS_END_TIME, String.format(Locale.US, "%02d", endTimeHours) + ":" + String.format(Locale.US, "%02d", endTimeMinutes));
         }
     }
 
@@ -351,7 +352,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
     // ASyncTask Functions. //
     //////////////////////////
 
-    void DEBUG_printData(HolderTimetableEntry[] data) {
+    private void DEBUG_printData(HolderTimetableEntry[] data) {
         for (int i = 0; i < data.length; i++) {
             Log.d(Tag.LOG, "Data object " + Integer.toString(i) + ":");
             for (int j = 0; j < ContractTimetableDatabase.SET_COLUMN_NAMES.length; j++) {

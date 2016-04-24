@@ -7,7 +7,7 @@ import java.util.Locale;
 /**
  * Created by Marco on 24/04/2016.
  */
-public class Util {
+class Util {
 
     String getDayOfWeek() {
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());

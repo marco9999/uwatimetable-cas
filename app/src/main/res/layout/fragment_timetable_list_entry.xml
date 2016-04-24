@@ -61,21 +61,24 @@
             android:layout_height="wrap_content"
             android:text="@string/start"
             android:id="@+id/start"
-            android:paddingStart="2dp" />
+            android:paddingStart="2dp"
+            android:layout_gravity="bottom" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/divider"
             android:paddingLeft="2dp"
-            android:paddingRight="2dp" />
+            android:paddingRight="2dp"
+            android:layout_gravity="bottom" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/end"
             android:id="@+id/end"
-            android:paddingStart="2dp" />
+            android:paddingStart="2dp"
+            android:layout_gravity="bottom" />
     </LinearLayout>
 
     <LinearLayout

@@ -25,8 +25,7 @@ public class FragmentTimetable extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_timetable, container, false);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class FragmentTimetable extends Fragment {
     // Action Functions. //
     ///////////////////////
 
-    void action_readFromCas() {
+    private void action_readFromCas() {
         DialogEngineTimetableCAS dialog = new DialogEngineTimetableCAS();
         dialog.show(getActivity().getSupportFragmentManager(), Tag.Fragment.DIALOG_READFROMCAS);
     }

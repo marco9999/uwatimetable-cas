@@ -5,10 +5,10 @@ import android.content.ContentValues;
 /**
  * Created by msatti on 14/04/16.
  */
-public class HolderTimetableEntry {
+class HolderTimetableEntry {
 
-    ContentValues holderInfo = null;
-    boolean hasID = false;
+    private ContentValues holderInfo = null;
+    private boolean hasID = false;
 
     HolderTimetableEntry(String[] info, boolean hasID) throws IllegalArgumentException {
         if (info != null) {
@@ -52,7 +52,7 @@ public class HolderTimetableEntry {
         }
     }
 
-    void allocCV() {
+    private void allocCV() {
         holderInfo = new ContentValues();
     }
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class AdapterTimetableList extends BaseAdapter {
 
-    UtilFragment utilFragment;
+    private UtilFragment utilFragment;
 
     private HolderTimetableEntry[] entriesArray = {};
 

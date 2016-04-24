@@ -1,5 +1,6 @@
 package com.github.marco9999.uwatimetable;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,9 +18,9 @@ import android.widget.EditText;
  */
 public class DialogEngineTimetableCAS extends DialogFragment implements TextWatcher {
 
-    Button loginButton;
-    EditText username;
-    EditText password;
+    private Button loginButton;
+    private EditText username;
+    private EditText password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,11 +38,11 @@ public class DialogEngineTimetableCAS extends DialogFragment implements TextWatc
         // Set title.
         builder.setTitle(R.string.title_readingfromcas);
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
+        // Inflate and set the layout for the dialog.
+        @SuppressLint("InflateParams") // Pass null as the parent view because its going in the dialog layout.
         View rootView = inflater.inflate(R.layout.dialog_readfromcas_login, null);
         builder.setView(rootView)
-                // Add action buttons
+                // Add action buttons.
                 .setPositiveButton(R.string.login, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int id) {
