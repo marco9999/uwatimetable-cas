@@ -1,6 +1,7 @@
 package com.github.marco9999.uwatimetable;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,14 @@ import android.widget.TextView;
  */
 public class AdapterTimetableList extends BaseAdapter {
 
+    UtilFragment utilFragment;
+
     private HolderTimetableEntry[] entriesArray = {};
+
+    AdapterTimetableList(UtilFragment utilFragment) {
+        if (utilFragment == null) throw new IllegalArgumentException("utilFragment was null! Needs to be a valid object for callbacks.");
+        this.utilFragment = utilFragment;
+    }
 
     @Override
     public int getCount() {
@@ -71,6 +79,15 @@ public class AdapterTimetableList extends BaseAdapter {
 
     void setEntriesArrayAndNotify(HolderTimetableEntry[] array) {
         entriesArray = array;
+        notifyDataSetChanged();
+    }
+
+    void getDatabaseEntriesArrayAndNotify() {
+        FragmentManager fm = utilFragment.getActivity().getSupportFragmentManager();
+        UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
+        assert (utilFragment != null);
+        HelperTimetableDatabase helperTDB = utilFragment.getHelperTimetableDatabase();
+        entriesArray = helperTDB.readAllTimetableDBEntry();
         notifyDataSetChanged();
     }
 }

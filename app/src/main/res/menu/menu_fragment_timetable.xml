@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.github.marco9999.uwatimetable.MainActivity">
+    tools:context="com.github.marco9999.uwatimetable.FragmentTimetable">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_readFromCAS"
+        android:orderInCategory="1"
+        android:title="@string/readFromCAS"
         app:showAsAction="never" />
 </menu>

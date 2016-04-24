@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UWATimetable.iml" filepath="$PROJECT_DIR$/UWATimetable.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/uwatimetable-cas.iml" filepath="$PROJECT_DIR$/uwatimetable-cas.iml" />
     </modules>
   </component>
 </project>

@@ -9,4 +9,14 @@
     <string name="venue">Venue</string>
     <string name="stream">Stream</string>
     <string name="weeks">Weeks</string>
+    <string name="readFromCAS">Read From CAS</string>
+    <string name="clearDatabase">Clear Database</string>
+    <string name="title_clearDatabase">Clear Database?</string>
+    <string name="studentid">Student ID</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="title_readingfromcas">Read Data from CAS</string>
+    <string name="progress_readingfromcas">Reading data from CAS. Please wait…</string>
 </resources>

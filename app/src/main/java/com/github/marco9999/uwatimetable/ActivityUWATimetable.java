@@ -1,19 +1,19 @@
 package com.github.marco9999.uwatimetable;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class ActivityUWATimetable extends AppCompatActivity {
 
     static final String LOG_TAG = "UWATimetable";
+
+    /////////////////////////
+    // Fragment Functions. //
+    /////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,45 +22,27 @@ public class ActivityUWATimetable extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        assert (fab != null);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        // Create the data fragment for the first time if it doesn't exist.
+        // Create the util/utilretain fragments for the first time if they dont exist.
         FragmentManager fm = getSupportFragmentManager();
-        DataFragment dataFragment = (DataFragment) fm.findFragmentByTag(FragmentTags.FRAGMENT_TAG_DATA);
-        if (dataFragment == null) {
+        UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
+        if (utilFragment == null) {
             // add the fragment
-            dataFragment = new DataFragment();
-            fm.beginTransaction().add(dataFragment, FragmentTags.FRAGMENT_TAG_DATA).commit();
+            utilFragment = new UtilFragment();
+            fm.beginTransaction().add(utilFragment, Tag.Fragment.UTIL).commit();
         }
-
-        // Create the database helper object if it doesn't exist.
-        if (dataFragment.getHelperTimetableDatabase() == null) {
-            dataFragment.setHelperTimetableDatabase(new HelperTimetableDatabase(this));
+        UtilRetainFragment utilRetainFragment = (UtilRetainFragment) fm.findFragmentByTag(Tag.Fragment.UTIL_RETAIN);
+        if (utilRetainFragment == null) {
+            // add the fragment
+            utilRetainFragment = new UtilRetainFragment();
+            fm.beginTransaction().add(utilRetainFragment, Tag.Fragment.UTIL_RETAIN).commit();
         }
-
-        // Open the timetable database for writing if its not open already.
-        if (dataFragment.getHelperTimetableDatabase().getDB() == null) {
-            boolean openResult = dataFragment.getHelperTimetableDatabase().openDB();
-            if (!openResult) {
-                Log.d(ActivityUWATimetable.LOG_TAG, "ActivityUWATimetable: onCreate: Couldn't open DB");
-            } else {
-                Log.d(ActivityUWATimetable.LOG_TAG, "ActivityUWATimetable: onCreate: Opened DB ok.");
-            }
-        }
+        fm.executePendingTransactions(); // Needed as commit() doesn't execute in time for when the other fragments need the util fragments.
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_uwatimetable, menu);
         return true;
     }
 
@@ -72,7 +54,8 @@ public class ActivityUWATimetable extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_clearDatabase) {
+            action_clearDatabase();
             return true;
         }
 
@@ -84,12 +67,20 @@ public class ActivityUWATimetable extends AppCompatActivity {
         // Close & erase the timetable database helper.
         // Find the retained fragment.
         FragmentManager fm = getSupportFragmentManager();
-        DataFragment dataFragment = (DataFragment) fm.findFragmentByTag(FragmentTags.FRAGMENT_TAG_DATA);
-        assert (dataFragment != null);
-        dataFragment.getHelperTimetableDatabase().closeDB();
+        UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
+        assert (utilFragment != null);
+        utilFragment.getHelperTimetableDatabase().closeDB();
 
         super.onDestroy();
     }
 
+    ///////////////////////
+    // Action Functions. //
+    ///////////////////////
 
+    void action_clearDatabase() {
+        // Recreate Database.
+        DialogClearDatabase dialog = new DialogClearDatabase();
+        dialog.show(getSupportFragmentManager(), Tag.Fragment.DIALOG_CLEARDATABASE);
+    }
 }
