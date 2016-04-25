@@ -1,14 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".FragmentTimetable"
-    tools:showIn="@layout/activity_uwatimetable">
+    tools:showIn="@layout/activity_uwatimetable"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_timetable_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -2,6 +2,8 @@ package com.github.marco9999.uwatimetable;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +27,8 @@ public class FragmentTimetable extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_timetable, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
+        return rootView;
     }
 
     @Override
@@ -33,13 +36,15 @@ public class FragmentTimetable extends Fragment {
         super.onActivityCreated(savedInstanceState);
         View rootView = getView();
         if (rootView != null) {
-            ListView timetableView = (ListView) rootView.findViewById(R.id.fragment_timetable_list);
+            RecyclerView timetableView = (RecyclerView) rootView.findViewById(R.id.fragment_timetable_list);
             if (timetableView != null) {
                 // Find the util Fragment.
                 UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
                 assert (utilFragment != null);
-                // Set adapter.
+                // Set layout manager & adapter.
+                timetableView.setLayoutManager(new LinearLayoutManager(getContext()));
                 timetableView.setAdapter(utilFragment.getAdapterTimetableList());
+                timetableView.setNestedScrollingEnabled(false); // Needed in order to operate with NestedScrollView correctly.
             }
         }
     }
@@ -47,10 +52,6 @@ public class FragmentTimetable extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        // Find Adapter for timetable ListView.
-        assert (getView() != null);
-        AdapterTimetableList adapterTL = (AdapterTimetableList) ((ListView) getView().findViewById(R.id.fragment_timetable_list)).getAdapter();
 
         // Get & set data and notify to update UI.
         UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
