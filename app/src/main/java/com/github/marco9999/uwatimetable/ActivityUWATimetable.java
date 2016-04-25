@@ -22,8 +22,15 @@ public class ActivityUWATimetable extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Create the util/utilretain fragments for the first time if they dont exist.
+        // Create Timetable fragment.
         FragmentManager fm = getSupportFragmentManager();
+        FragmentTimetable timetableFragment = (FragmentTimetable) fm.findFragmentByTag(Tag.Fragment.TIMETABLE);
+        if (timetableFragment == null) {
+            timetableFragment = new FragmentTimetable();
+            fm.beginTransaction().add(R.id.coordinatorlayout, timetableFragment, Tag.Fragment.TIMETABLE).commit();
+        }
+
+        // Create the util/utilretain fragments for the first time if they dont exist.
         UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
         if (utilFragment == null) {
             // add the fragment

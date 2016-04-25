@@ -9,6 +9,7 @@ class Tag {
     static final String LOG = "log_uwatimetable";
 
     public class Fragment {
+        static final String TIMETABLE = "fragment_timetable";
         static final String UTIL = "fragment_util";
         static final String UTIL_RETAIN = "fragment_util_retain";
 

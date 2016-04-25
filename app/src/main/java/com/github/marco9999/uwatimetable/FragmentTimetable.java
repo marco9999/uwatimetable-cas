@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 public class FragmentTimetable extends Fragment {
 
@@ -44,7 +43,7 @@ public class FragmentTimetable extends Fragment {
                 // Set layout manager & adapter.
                 timetableView.setLayoutManager(new LinearLayoutManager(getContext()));
                 timetableView.setAdapter(utilFragment.getAdapterTimetableList());
-                timetableView.setNestedScrollingEnabled(false); // Needed in order to operate with NestedScrollView correctly.
+                //timetableView.setNestedScrollingEnabled(false);
             }
         }
     }
