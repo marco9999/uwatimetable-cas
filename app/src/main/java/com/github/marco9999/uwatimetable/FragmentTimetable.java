@@ -2,6 +2,7 @@ package com.github.marco9999.uwatimetable;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 public class FragmentTimetable extends Fragment {
 
@@ -33,8 +37,11 @@ public class FragmentTimetable extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        View rootView = getView();
+
+        // Setup needed views (RecyclerView, Spinners).
+        NestedScrollView rootView = (NestedScrollView) getView();
         if (rootView != null) {
+            // Timetable List.
             RecyclerView timetableView = (RecyclerView) rootView.findViewById(R.id.fragment_timetable_list);
             if (timetableView != null) {
                 // Find the util Fragment.
@@ -43,8 +50,24 @@ public class FragmentTimetable extends Fragment {
                 // Set layout manager & adapter.
                 timetableView.setLayoutManager(new LinearLayoutManager(getContext()));
                 timetableView.setAdapter(utilFragment.getAdapterTimetableList());
-                //timetableView.setNestedScrollingEnabled(false);
+                timetableView.setNestedScrollingEnabled(false);
             }
+
+            // Day spinner.
+            Spinner daySpinner = (Spinner) rootView.findViewById(R.id.spinner_day);
+            CharSequence[] dayArray = getResources().getStringArray(R.array.day_spinner_array);
+            AdapterSpinnerDay dayAdapter = new AdapterSpinnerDay(getContext(), android.R.layout.simple_spinner_item, dayArray);
+            dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            daySpinner.setAdapter(dayAdapter);
+            daySpinner.setOnItemSelectedListener(dayAdapter);
+
+            // Week spinner.
+            Spinner weekSpinner = (Spinner) rootView.findViewById(R.id.spinner_week);
+            CharSequence[] weekArray = getResources().getStringArray(R.array.week_spinner_array);
+            AdapterSpinnerWeek weekAdapter = new AdapterSpinnerWeek(getContext(), android.R.layout.simple_spinner_item, weekArray);
+            weekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            weekSpinner.setAdapter(weekAdapter);
+            weekSpinner.setOnItemSelectedListener(weekAdapter);
         }
     }
 

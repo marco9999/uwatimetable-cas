@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
+    android:layout_margin="@dimen/cardview_default_margin"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
     card_view:cardElevation="@dimen/cardview_default_elevation" >
 
@@ -13,50 +13,46 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
+        android:padding="@dimen/entry_cardview_inset_padding"
         android:id="@+id/fragment_timetable_list_entry">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/unit"
                 android:id="@+id/unit"
-                android:layout_weight="1"
-                android:paddingEnd="2dp" />
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/type"
-                android:id="@+id/type"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp" />
+                android:id="@+id/type" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/divider"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp" />
+                android:paddingLeft="@dimen/entry_text_padding"
+                android:paddingRight="@dimen/entry_text_padding" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stream"
-                android:id="@+id/stream"
-                android:paddingStart="2dp" />
+                android:id="@+id/stream" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             android:paddingBottom="5dp">
 
             <TextView
@@ -71,15 +67,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/start"
                 android:id="@+id/start"
-                android:paddingStart="2dp"
                 android:layout_gravity="bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/divider"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
+                android:paddingLeft="@dimen/entry_text_padding"
+                android:paddingRight="@dimen/entry_text_padding"
                 android:layout_gravity="bottom" />
 
             <TextView
@@ -87,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/end"
                 android:id="@+id/end"
-                android:paddingStart="2dp"
                 android:layout_gravity="bottom" />
         </LinearLayout>
 

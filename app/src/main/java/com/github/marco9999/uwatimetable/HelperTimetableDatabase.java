@@ -159,6 +159,34 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         return hasSucceeded;
     }
 
+    HolderTimetableEntry[] readTimetableDBEntry(String day, SORT sortType) {
+        Log.d(Tag.LOG, "Executing timetable database query with day = " + day + " and SORT = " + sortType.toString());
+
+        assert (database != null);
+        // Get DB results.
+        Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, ContractTimetableDatabase.COLUMN_CLASS_DAY + " IS " + day, null, null, null, orderBy(sortType), null);
+
+        // Allocate length of entryArray.
+        HolderTimetableEntry[] entryArray = new HolderTimetableEntry[results.getCount()];
+
+        // Put cursor results into holders.
+        String[] tempStrArrayHolder;
+        while (results.moveToNext()) {
+            tempStrArrayHolder = new String[ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length];
+            for (int i = 0; i < ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length; i++) {
+                tempStrArrayHolder[i] =  results.getString(i);
+            }
+            entryArray[results.getPosition()] = new HolderTimetableEntry(tempStrArrayHolder, true);
+        }
+
+        // Close results cursor.
+        results.close();
+
+        Log.d(Tag.LOG, "Successfully executed database query. Number of entries = " + String.valueOf(entryArray.length));
+
+        return entryArray;
+    }
+
     HolderTimetableEntry[] readAllTimetableDBEntry(SORT sortType) {
         Log.d(Tag.LOG, "Executing timetable database query with SORT = " + sortType.toString());
 
