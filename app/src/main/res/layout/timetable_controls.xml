@@ -24,8 +24,8 @@
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/activity_default_margin"
-            android:layout_marginRight="@dimen/activity_default_margin" />
+            android:layout_marginLeft="@dimen/timetable_control_divider_margin"
+            android:layout_marginRight="@dimen/timetable_control_divider_margin" />
 
         <Spinner
             android:layout_width="@dimen/timetable_control_spinner_width"
