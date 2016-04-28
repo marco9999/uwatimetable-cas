@@ -1,6 +1,5 @@
 package com.github.marco9999.uwatimetable;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,14 +9,19 @@ import android.widget.ArrayAdapter;
  */
 public class AdapterSpinnerDay extends ArrayAdapter<CharSequence> implements AdapterView.OnItemSelectedListener {
 
+    UtilFragment utilFragment;
 
-    public AdapterSpinnerDay(Context context, int textViewResourceId, CharSequence[] objects) {
-        super(context, textViewResourceId, objects);
+    public AdapterSpinnerDay(UtilFragment utilFragment, int textViewResourceId, CharSequence[] objects) {
+        super(utilFragment.getContext(), textViewResourceId, objects);
+        this.utilFragment = utilFragment;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        if (view != null) {
+            // If view is null, this means that the spinner has not yet displayed. This is to fix the function being called twice.
+            utilFragment.findFragmentTimetable().getDatabaseEntriesArrayAndNotify();
+        }
     }
 
     @Override

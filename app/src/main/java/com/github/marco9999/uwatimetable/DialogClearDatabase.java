@@ -36,7 +36,7 @@ public class DialogClearDatabase extends DialogFragment {
                     utilFragment.getHelperTimetableDatabase().recreateDB();
 
                     // Refresh UI
-                    utilFragment.getAdapterTimetableList().getDatabaseEntriesArrayAndNotify();
+                    utilFragment.findFragmentTimetable().getDatabaseEntriesArrayAndNotify();
                 }
             })
             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

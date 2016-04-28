@@ -84,13 +84,4 @@ public class AdapterTimetableList extends RecyclerView.Adapter<AdapterTimetableL
         entriesArray = array;
         notifyDataSetChanged();
     }
-
-    void getDatabaseEntriesArrayAndNotify() {
-        FragmentManager fm = utilFragment.getActivity().getSupportFragmentManager();
-        UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
-        assert (utilFragment != null);
-        HelperTimetableDatabase helperTDB = utilFragment.getHelperTimetableDatabase();
-        entriesArray = helperTDB.readAllTimetableDBEntry(HelperTimetableDatabase.SORT.DAY_THEN_START_TIME);
-        notifyDataSetChanged();
-    }
 }

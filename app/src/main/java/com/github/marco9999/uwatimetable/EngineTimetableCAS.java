@@ -413,7 +413,7 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
         if (dialog != null) dialog.dismiss();
 
         // Issue callback to UI thread.
-        utilRetainFragment.getUtilFragment().getAdapterTimetableList().getDatabaseEntriesArrayAndNotify();
+        utilRetainFragment.getUtilFragment().findFragmentTimetable().getDatabaseEntriesArrayAndNotify();
 
         // Show Snackbar message to user.
         Snackbar.make(utilRetainFragment.getActivity().findViewById(R.id.coordinatorlayout), param, Snackbar.LENGTH_LONG).show();
