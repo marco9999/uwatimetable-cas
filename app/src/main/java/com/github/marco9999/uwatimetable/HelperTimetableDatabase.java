@@ -167,9 +167,10 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
     HolderTimetableEntry[] readTimetableDBEntry(SORT sortType, String dayParam, String weekParam) {
         Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + ", week = " + weekParam + " and SORT = " + sortType.toString());
 
-        // Format the day and week strings into SQL clauses.
+        // Format the day and week strings into SQL clauses. Check for appropriate SORT parameter.
         dayParam = Util.formatSQLDay(dayParam);
         weekParam = Util.formatSQLWeek(weekParam);
+        if (dayParam == null) sortType = SORT.DAY_THEN_START_TIME;
 
         assert (database != null);
         // Get DB results.
