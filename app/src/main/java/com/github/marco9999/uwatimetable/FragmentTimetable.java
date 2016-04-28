@@ -70,6 +70,16 @@ public class FragmentTimetable extends Fragment {
                 weekSpinner.setAdapter(utilFragment.getAdapterSpinnerWeek());
                 weekSpinner.setOnItemSelectedListener(utilFragment.getAdapterSpinnerWeek());
             }
+
+            // Set initial values if fragment is created for the first time.
+            if (savedInstanceState == null) {
+                if (daySpinner != null) {
+                    daySpinner.setSelection(utilFragment.getAdapterSpinnerDay().getPosition(Util.getDayOfWeek()), false);
+                }
+                if (weekSpinner != null) {
+                    weekSpinner.setSelection(utilFragment.getAdapterSpinnerWeek().getPosition(Util.getWeekOfYear()), false);
+                }
+            }
         }
     }
 
@@ -94,7 +104,16 @@ public class FragmentTimetable extends Fragment {
             action_readFromCas();
             return true;
         }
+        else if (id == R.id.action_resetrange) {
+            action_resetRange();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outBundle) {
+        super.onSaveInstanceState(outBundle);
     }
 
     ///////////////////////
@@ -121,5 +140,25 @@ public class FragmentTimetable extends Fragment {
     private void action_readFromCas() {
         DialogEngineTimetableCAS dialog = new DialogEngineTimetableCAS();
         dialog.show(getActivity().getSupportFragmentManager(), Tag.Fragment.DIALOG_READFROMCAS);
+    }
+
+    private void action_resetRange() {
+        // Find the util Fragment.
+        UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
+        assert (utilFragment != null);
+
+        // Reset values to current day and week.
+        NestedScrollView rootView = (NestedScrollView) getView();
+        if (rootView != null) {
+            Spinner daySpinner = (Spinner) rootView.findViewById(R.id.spinner_day);
+            Spinner weekSpinner = (Spinner) rootView.findViewById(R.id.spinner_week);
+
+            if (daySpinner != null) {
+                daySpinner.setSelection(utilFragment.getAdapterSpinnerDay().getPosition(Util.getDayOfWeek()), true);
+            }
+            if (weekSpinner != null) {
+                weekSpinner.setSelection(utilFragment.getAdapterSpinnerWeek().getPosition(Util.getWeekOfYear()), true);
+            }
+        }
     }
 }

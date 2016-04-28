@@ -16,7 +16,15 @@ class Util {
 
     static String getDayOfWeek() {
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
-        return dayFormat.format(Calendar.getInstance().getTime());
+        String day = dayFormat.format(Calendar.getInstance().getTime());
+        if (day.equals("Saturday") || day.equals("Sunday")) day = "Weekend"; // Special case.
+        return day;
+    }
+
+    static String getWeekOfYear() {
+        // Have to use the UK locale to get the correct week... No Australia locale?
+        int week = Calendar.getInstance(Locale.UK).get(Calendar.WEEK_OF_YEAR);
+        return Integer.toString(week);
     }
 
     // Used to format sql queries into the WHERE clause.

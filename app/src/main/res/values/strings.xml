@@ -9,7 +9,8 @@
     <string name="stream">Stream</string>
     <string name="weeks">Weeks</string>
     <string name="day">Day</string>
-    <string name="readFromCAS">Read From CAS</string>
+    <string name="readFromCAS">Read from CAS</string>
+    <string name="resetrange">Reset Range</string>
     <string name="clearDatabase">Clear Database</string>
     <string name="title_clearDatabase">Clear Database?</string>
     <string name="studentid">Student ID</string>
