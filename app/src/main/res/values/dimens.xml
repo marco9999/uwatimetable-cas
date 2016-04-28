@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_default_margin">8dp</dimen>
+    <dimen name="text_default_margin">3dp</dimen>
     <dimen name="timetable_control_divider_margin">7dp</dimen>
     <dimen name="cardview_default_margin">5dp</dimen>
     <dimen name="entry_cardview_inset_padding">12dp</dimen>

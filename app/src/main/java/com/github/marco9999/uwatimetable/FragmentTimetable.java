@@ -54,6 +54,7 @@ public class FragmentTimetable extends Fragment {
                 timetableView.setLayoutManager(new LinearLayoutManager(getContext()));
                 timetableView.setAdapter(utilFragment.getAdapterTimetableList());
                 timetableView.setNestedScrollingEnabled(false);
+                timetableView.setHasFixedSize(false);
             }
 
             // Day spinner.

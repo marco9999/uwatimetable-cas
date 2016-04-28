@@ -6,32 +6,52 @@
     android:layout_width="match_parent"
     android:layout_margin="@dimen/cardview_default_margin"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
-    card_view:cardElevation="@dimen/cardview_default_elevation" >
+    card_view:cardElevation="@dimen/cardview_default_elevation">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_default_margin"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <Spinner
-            android:layout_width="@dimen/timetable_control_spinner_width"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner_day"
-            android:dropDownWidth="@dimen/timetable_control_spinner_width" />
+            android:text="@string/hint_range"
+            android:layout_marginStart="@dimen/activity_default_margin"
+            android:layout_marginTop="@dimen/text_default_margin"
+            android:textAppearance="?android:textAppearanceSmall"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/timetable_control_divider_margin"
-            android:layout_marginRight="@dimen/timetable_control_divider_margin" />
 
-        <Spinner
-            android:layout_width="@dimen/timetable_control_spinner_width"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner_week"
-            android:dropDownWidth="@dimen/timetable_control_spinner_width" />
+            android:layout_marginStart="@dimen/activity_default_margin"
+            android:layout_marginEnd="@dimen/activity_default_margin"
+            android:layout_marginBottom="@dimen/activity_default_margin"
+            android:gravity="center_horizontal">
 
+
+            <Spinner
+                android:layout_width="@dimen/timetable_control_spinner_width"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_day"
+                android:dropDownWidth="@dimen/timetable_control_spinner_width" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/timetable_control_divider_margin"
+                android:layout_marginRight="@dimen/timetable_control_divider_margin"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner
+                android:layout_width="@dimen/timetable_control_spinner_width"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_week"
+                android:dropDownWidth="@dimen/timetable_control_spinner_width" />
+
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

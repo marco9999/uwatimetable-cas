@@ -20,6 +20,7 @@
     <string name="clear">Clear</string>
     <string name="title_readingfromcas">Read Data from CAS</string>
     <string name="progress_readingfromcas">Reading data from CAS. Please wait…</string>
+    <string name="hint_range">Select range:</string>
 
     <string-array name="day_spinner_array" >
         <item>All Days</item>
