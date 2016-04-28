@@ -16,8 +16,11 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
 
     private SQLiteDatabase database = null;
 
-    HelperTimetableDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    UtilFragment utilFragment;
+
+    HelperTimetableDatabase(UtilFragment utilFragment) {
+        super(utilFragment.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+        this.utilFragment = utilFragment;
     }
 
     ////////////////////
@@ -128,6 +131,8 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         }
     }
 
+
+
     boolean writeTimetableDBEntry(HolderTimetableEntry info) {
         assert (database != null);
         // info contains list of class entry parameters (in the order listed by ContractTimetableDatabase.SET_COLUMN_NAMES) through the ContentValues object underneath it.
@@ -159,12 +164,16 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         return hasSucceeded;
     }
 
-    HolderTimetableEntry[] readTimetableDBEntry(String day, SORT sortType) {
-        Log.d(Tag.LOG, "Executing timetable database query with day = " + day + " and SORT = " + sortType.toString());
+    HolderTimetableEntry[] readTimetableDBEntry(SORT sortType, String dayParam, String weekParam) {
+        Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + ", week = " + weekParam + " and SORT = " + sortType.toString());
+
+        // Format the day and week strings into SQL clauses.
+        dayParam = Util.formatSQLDay(dayParam);
+        weekParam = Util.formatSQLWeek(weekParam);
 
         assert (database != null);
         // Get DB results.
-        Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, ContractTimetableDatabase.COLUMN_CLASS_DAY + " IS " + day, null, null, null, orderBy(sortType), null);
+        Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, dayParam, null, null, null, orderBy(sortType), null);
 
         // Allocate length of entryArray.
         HolderTimetableEntry[] entryArray = new HolderTimetableEntry[results.getCount()];

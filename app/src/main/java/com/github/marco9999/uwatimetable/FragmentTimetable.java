@@ -2,6 +2,7 @@ package com.github.marco9999.uwatimetable;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,15 +39,17 @@ public class FragmentTimetable extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Find the util Fragment.
+        UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
+        assert (utilFragment != null);
+
         // Setup needed views (RecyclerView, Spinners).
         NestedScrollView rootView = (NestedScrollView) getView();
         if (rootView != null) {
             // Timetable List.
             RecyclerView timetableView = (RecyclerView) rootView.findViewById(R.id.fragment_timetable_list);
             if (timetableView != null) {
-                // Find the util Fragment.
-                UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
-                assert (utilFragment != null);
+
                 // Set layout manager & adapter.
                 timetableView.setLayoutManager(new LinearLayoutManager(getContext()));
                 timetableView.setAdapter(utilFragment.getAdapterTimetableList());
@@ -55,19 +58,18 @@ public class FragmentTimetable extends Fragment {
 
             // Day spinner.
             Spinner daySpinner = (Spinner) rootView.findViewById(R.id.spinner_day);
-            CharSequence[] dayArray = getResources().getStringArray(R.array.day_spinner_array);
-            AdapterSpinnerDay dayAdapter = new AdapterSpinnerDay(getContext(), android.R.layout.simple_spinner_item, dayArray);
-            dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            daySpinner.setAdapter(dayAdapter);
-            daySpinner.setOnItemSelectedListener(dayAdapter);
+            if (daySpinner != null) {
+                daySpinner.setAdapter(utilFragment.getAdapterSpinnerDay());
+                daySpinner.setOnItemSelectedListener(utilFragment.getAdapterSpinnerDay());
+            }
+
 
             // Week spinner.
             Spinner weekSpinner = (Spinner) rootView.findViewById(R.id.spinner_week);
-            CharSequence[] weekArray = getResources().getStringArray(R.array.week_spinner_array);
-            AdapterSpinnerWeek weekAdapter = new AdapterSpinnerWeek(getContext(), android.R.layout.simple_spinner_item, weekArray);
-            weekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            weekSpinner.setAdapter(weekAdapter);
-            weekSpinner.setOnItemSelectedListener(weekAdapter);
+            if (weekSpinner != null) {
+                weekSpinner.setAdapter(utilFragment.getAdapterSpinnerWeek());
+                weekSpinner.setOnItemSelectedListener(utilFragment.getAdapterSpinnerWeek());
+            }
         }
     }
 
@@ -76,9 +78,7 @@ public class FragmentTimetable extends Fragment {
         super.onResume();
 
         // Get & set data and notify to update UI.
-        UtilFragment utilFragment = (UtilFragment) getActivity().getSupportFragmentManager().findFragmentByTag(Tag.Fragment.UTIL);
-        assert (utilFragment != null);
-        utilFragment.getAdapterTimetableList().getDatabaseEntriesArrayAndNotify();
+        getDatabaseEntriesArrayAndNotify();
     }
 
     @Override
@@ -100,6 +100,23 @@ public class FragmentTimetable extends Fragment {
     ///////////////////////
     // Action Functions. //
     ///////////////////////
+
+    void getDatabaseEntriesArrayAndNotify() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        UtilFragment utilFragment = (UtilFragment) fm.findFragmentByTag(Tag.Fragment.UTIL);
+        assert (utilFragment != null);
+
+        assert (getView() != null);
+        Spinner daySpinner = (Spinner) getView().findViewById(R.id.spinner_day);
+        Spinner weekSpinner = (Spinner) getView().findViewById(R.id.spinner_week);
+        if (daySpinner != null && weekSpinner != null) {
+            String dayParam = daySpinner.getSelectedItem().toString();
+            String weekParam = weekSpinner.getSelectedItem().toString();
+
+            HolderTimetableEntry[] entriesArray = utilFragment.getHelperTimetableDatabase().readTimetableDBEntry(HelperTimetableDatabase.SORT.START_TIME, dayParam, weekParam);
+            utilFragment.getAdapterTimetableList().setEntriesArrayAndNotify(entriesArray);
+        }
+    }
 
     private void action_readFromCas() {
         DialogEngineTimetableCAS dialog = new DialogEngineTimetableCAS();
