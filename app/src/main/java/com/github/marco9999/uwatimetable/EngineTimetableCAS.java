@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -292,12 +293,13 @@ public class EngineTimetableCAS extends AsyncTask<EngineTimetableCAS.UserDetails
                 dayCount += 7;
             }
 
-            // Put date blocks into their string representation: dd/mm-dd/mm, dd/mm-dd/mm or otherwise.
+            // Put date blocks into their string representation: yyyy/dd/mm-yyyy/dd/mm,yyyy/dd/mm-yyyy/dd/mm or otherwise.
             StringBuilder blockString = new StringBuilder();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
             for (Calendar[] block : blockPairs) {
-                blockString.append(block[0].get(Calendar.DATE)).append("/").append(block[0].get(Calendar.MONTH) + 1); // Need to +1 for the month as it is zero-index based.
+                blockString.append(dateFormat.format(block[0].getTime()));
                 blockString.append("-");
-                blockString.append(block[1].get(Calendar.DATE)).append("/").append(block[1].get(Calendar.MONTH) + 1); // Need to +1 for the month as it is zero-index based.
+                blockString.append(dateFormat.format(block[1].getTime()));
                 blockString.append(",");
             }
             blockString.deleteCharAt(blockString.length() - 1);

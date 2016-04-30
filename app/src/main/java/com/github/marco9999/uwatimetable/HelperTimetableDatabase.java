@@ -165,11 +165,11 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
     }
 
     HolderTimetableEntry[] readTimetableDBEntry(SORT sortType, String dayParam, String weekParam) {
-        Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + ", week = " + weekParam + " and SORT = " + sortType.toString());
+        Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + " and SORT = " + sortType.toString());
 
         // Format the day and week strings into SQL clauses. Check for appropriate SORT parameter.
+        String dayParamOrig = dayParam;
         dayParam = Util.formatSQLDay(dayParam);
-        weekParam = Util.formatSQLWeek(weekParam);
         if (dayParam == null) sortType = SORT.DAY_THEN_START_TIME;
 
         assert (database != null);
@@ -193,6 +193,12 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         results.close();
 
         Log.d(Tag.LOG, "Successfully executed database query. Number of entries = " + String.valueOf(entryArray.length));
+
+        // Return only those within the week specified (too hard to do in SQL, so do it in java).
+        entryArray = Util.filterEntriesWeek(entryArray, dayParamOrig, weekParam);
+
+        Log.d(Tag.LOG, "Successfully filtered entries by weeks. Number of entries = " + String.valueOf(entryArray.length));
+
 
         return entryArray;
     }
