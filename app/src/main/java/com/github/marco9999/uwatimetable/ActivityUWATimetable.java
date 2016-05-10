@@ -7,17 +7,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class ActivityUWATimetable extends AppCompatActivity {
 
     static final String LOG_TAG = "UWATimetable";
 
     /////////////////////////
-    // Fragment Functions. //
+    // Activity Functions. //
     /////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JodaTimeAndroid.init(this);
         setContentView(R.layout.activity_uwatimetable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

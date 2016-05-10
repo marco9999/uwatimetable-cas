@@ -133,7 +133,7 @@ public class FragmentTimetable extends Fragment {
             String dayParam = daySpinner.getSelectedItem().toString();
             String weekParam = weekSpinner.getSelectedItem().toString();
 
-            HolderTimetableEntry[] entriesArray = utilFragment.getHelperTimetableDatabase().readTimetableDBEntry(HelperTimetableDatabase.SORT.START_TIME, dayParam, weekParam);
+            HolderTimetableEntry[] entriesArray = utilFragment.getHelperTimetableDatabase().readTimetableDBEntry(HelperTimetableDatabase.SQLSORT.START_TIME, dayParam, weekParam);
             utilFragment.getAdapterTimetableList().setEntriesArrayAndNotify(entriesArray);
         }
     }
