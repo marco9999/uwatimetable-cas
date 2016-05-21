@@ -159,21 +159,23 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
     }
 
     private HolderTimetableEntry[] filterEntriesWeek(HolderTimetableEntry[] data, String day, String week) {
+        // Return original data set if week filtering is turned off.
         if (week == null || week.equals("All Weeks")) {
             return data;
         }
 
-        // Convert string into day array of ints for making times.
+        // Need to iterate through each of the days that are tested for as the start/end dates may lie on one of the days.
         String[] dayStringArray;
-        int[] dayIntArray;
-        if (day.equals("Weekend")) {
-            dayStringArray = new String[]{"Saturday", "Sunday"};
-        }
-        else if (day.equals("All Days")) {
-            dayStringArray = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-        }
-        else {
-            dayStringArray = new String[]{day};
+        switch (day) {
+            case "Weekend":
+                dayStringArray = new String[]{"Saturday", "Sunday"};
+                break;
+            case "All Days":
+                dayStringArray = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+                break;
+            default:
+                dayStringArray = new String[]{day};
+                break;
         }
 
         // Get week as an int.
@@ -241,13 +243,12 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         return hasSucceeded;
     }
 
-    HolderTimetableEntry[] readTimetableDBEntry(SQLSORT sortType, String dayParam, String weekParam) {
-        Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + " and SORT = " + sortType.toString());
-
+    HolderTimetableEntry[] readTimetableDBEntries(SQLSORT sortType, String dayParam, String weekParam) {
         // Format the day and week strings into SQL clauses. Check for appropriate SORT parameter.
         String formatWhereStr = formatWhere(dayParam);
         if (dayParam == null) sortType = SQLSORT.DAY_THEN_START_TIME;
         String formatOrderByStr = formatOrderBy(sortType);
+        Log.d(Tag.LOG, "Executing timetable database query with day = " + dayParam + " and SORT = " + sortType.toString());
 
         if (database != null) {
             // Get DB results.
@@ -284,4 +285,26 @@ class HelperTimetableDatabase extends SQLiteOpenHelper {
         }
     }
 
+    HolderTimetableEntry readTimetableDBEntry(String id) {
+        if (database != null) {
+            // Get DB results.
+            Cursor results = database.query(ContractTimetableDatabase.TABLE_NAME, null, ContractTimetableDatabase._ID + " IS " + id, null, null, null, null, null);
+
+            // Put cursor results into holders.
+            String[] tempStrArrayHolder;
+            results.moveToNext();
+            tempStrArrayHolder = new String[ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length];
+            for (int i = 0; i < ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length; i++) {
+                tempStrArrayHolder[i] = results.getString(i);
+            }
+            HolderTimetableEntry holder = new HolderTimetableEntry(tempStrArrayHolder, true);
+
+            // Close results cursor.
+            results.close();
+
+            return holder;
+        } else {
+            return null;
+        }
+    }
 }

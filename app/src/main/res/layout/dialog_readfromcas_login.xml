@@ -12,7 +12,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/studentid" />
+        android:hint="@string/student_id" />
     <EditText
         android:id="@+id/readfromcas_password"
         android:inputType="textPassword"

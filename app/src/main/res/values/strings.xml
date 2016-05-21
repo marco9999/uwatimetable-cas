@@ -6,21 +6,29 @@
     <string name="end">End</string>
     <string name="type">Type</string>
     <string name="venue">Venue</string>
+    <string name="description">Unit Description</string>
     <string name="stream">Stream</string>
     <string name="weeks">Weeks</string>
+    <string name="entry_id">Entry ID</string>
     <string name="day">Day</string>
     <string name="readFromCAS">Read from CAS</string>
-    <string name="resetrange">Reset Range</string>
+    <string name="reset_range">Reset Range</string>
     <string name="clearDatabase">Clear Database</string>
     <string name="title_clearDatabase">Clear Database?</string>
-    <string name="studentid">Student ID</string>
+    <string name="student_id">Student ID</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="cancel">Cancel</string>
     <string name="clear">Clear</string>
-    <string name="title_readingfromcas">Read Data from CAS</string>
-    <string name="progress_readingfromcas">Reading data from CAS. Please wait…</string>
-    <string name="hint_range">Select range:</string>
+    <string name="title_reading_from_cas">Read Data from CAS</string>
+    <string name="progress_reading_from_cas">Reading data from CAS. Please wait…</string>
+    <string name="hint_range">Select Range</string>
+    <string name="title_timetable_detail">Details</string>
+    <string name="no_extra_detail_available">No extra details available.</string>
+    <string name="unit_details">Unit Details</string>
+    <string name="database_details">Database Details</string>
+    <string name="date_details">Date Details</string>
+    <string name="yyyyMMdd">(yyyy/MM/dd)</string>
 
     <string-array name="day_spinner_array" >
         <item>All Days</item>

@@ -20,6 +20,7 @@ public class AdapterSpinnerDay extends ArrayAdapter<CharSequence> implements Ada
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (view != null) {
             // If view is null, this means that the spinner has not yet displayed. This is to fix the function being called twice.
+            // Still has a problem where it is called multiple times, will have to look into it.
             utilFragment.findFragmentTimetable().getDatabaseEntriesArrayAndNotify();
         }
     }

@@ -1,6 +1,7 @@
 package com.github.marco9999.uwatimetable;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,17 +15,36 @@ import android.widget.TextView;
  */
 public class AdapterTimetableList extends RecyclerView.Adapter<AdapterTimetableList.HolderView> {
 
-    public static class HolderView extends RecyclerView.ViewHolder {
+    class HolderView extends RecyclerView.ViewHolder implements View.OnClickListener {
         View entryLayout;
+        String entryID;
 
         HolderView(View entryLayout) {
             super(entryLayout);
+            entryLayout.setOnClickListener(this);
             this.entryLayout = entryLayout;
+        }
+
+        void setEntryID(String id) {
+            entryID = id;
+        }
+
+        String getEntryID() {
+            return entryID;
+        }
+
+        @Override
+        public void onClick(View v) {
+            // Launch the details activity with the id parsed to it.
+            String id = HolderView.this.getEntryID();
+            Context context = v.getContext();
+            Intent intent = new Intent(context, ActivityTimetableDetails.class);
+            intent.putExtra(ActivityTimetableDetails.KEY_TIMETABLE_ENTRY_ID, id);
+            context.startActivity(intent);
         }
     }
 
     private UtilFragment utilFragment;
-
     private HolderTimetableEntry[] entriesArray = {};
 
     AdapterTimetableList(UtilFragment utilFragment) {
@@ -50,6 +70,9 @@ public class AdapterTimetableList extends RecyclerView.Adapter<AdapterTimetableL
         TextView fieldView;
         String fieldString;
         if (entriesArray[position].getHasID()) {
+            // Assign viewholder its ID, based on the entry id.
+            holder.setEntryID(entriesArray[position].get(ContractTimetableDatabase._ID));
+
             // Put in values.
             for (int i = 0; i < ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length; i++) {
                 //todo: implement code for displaying id's for debugging.

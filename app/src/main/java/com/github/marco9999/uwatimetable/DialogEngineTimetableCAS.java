@@ -36,7 +36,7 @@ public class DialogEngineTimetableCAS extends DialogFragment implements TextWatc
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         // Set title.
-        builder.setTitle(R.string.title_readingfromcas);
+        builder.setTitle(R.string.title_reading_from_cas);
 
         // Inflate and set the layout for the dialog.
         @SuppressLint("InflateParams") // Pass null as the parent view because its going in the dialog layout.

@@ -12,8 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 public class FragmentTimetable extends Fragment {
@@ -133,7 +131,7 @@ public class FragmentTimetable extends Fragment {
             String dayParam = daySpinner.getSelectedItem().toString();
             String weekParam = weekSpinner.getSelectedItem().toString();
 
-            HolderTimetableEntry[] entriesArray = utilFragment.getHelperTimetableDatabase().readTimetableDBEntry(HelperTimetableDatabase.SQLSORT.START_TIME, dayParam, weekParam);
+            HolderTimetableEntry[] entriesArray = utilFragment.getHelperTimetableDatabase().readTimetableDBEntries(HelperTimetableDatabase.SQLSORT.START_TIME, dayParam, weekParam);
             utilFragment.getAdapterTimetableList().setEntriesArrayAndNotify(entriesArray);
         }
     }

@@ -8,5 +8,6 @@
     <dimen name="cardview_default_margin">5dp</dimen>
     <dimen name="entry_cardview_inset_padding">12dp</dimen>
     <dimen name="entry_text_padding">3dp</dimen>
+    <dimen name="entry_vertical_padding">5dp</dimen>
     <dimen name="timetable_control_spinner_width">140dp</dimen>
 </resources>

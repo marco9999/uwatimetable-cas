@@ -75,4 +75,27 @@ class HolderTimetableEntry {
     ContentValues getContentValues() {
         return holderInfo;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder strbuf = new StringBuilder();
+        if (hasID) {
+            for (int i = 0; i < ContractTimetableDatabase.SET_COLUMN_NAMES_ID.length; i++) {
+                strbuf.append(ContractTimetableDatabase.SET_COLUMN_NAMES_ID[i]);
+                strbuf.append("=");
+                strbuf.append(holderInfo.get(ContractTimetableDatabase.SET_COLUMN_NAMES_ID[i]));
+                strbuf.append(";");
+            }
+        }
+        else {
+            for (int i = 0; i < ContractTimetableDatabase.SET_COLUMN_NAMES.length; i++) {
+                strbuf.append(ContractTimetableDatabase.SET_COLUMN_NAMES[i]);
+                strbuf.append("=");
+                strbuf.append(holderInfo.get(ContractTimetableDatabase.SET_COLUMN_NAMES[i]));
+                strbuf.append(";");
+            }
+        }
+        strbuf.deleteCharAt(strbuf.length());
+        return strbuf.toString();
+    }
 }

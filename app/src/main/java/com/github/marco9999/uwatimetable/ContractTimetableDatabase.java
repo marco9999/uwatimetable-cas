@@ -21,8 +21,10 @@ class ContractTimetableDatabase implements BaseColumns{
     static final String[] SET_COLUMN_NAMES = {COLUMN_CLASS_UNIT, COLUMN_CLASS_UNIT_DESCRIPTION, COLUMN_CLASS_VENUE, COLUMN_CLASS_TYPE, COLUMN_CLASS_DAY, COLUMN_CLASS_START_DATE, COLUMN_CLASS_START_TIME, COLUMN_CLASS_END_TIME, COLUMN_CLASS_STREAM, COLUMN_CLASS_WEEKS};
     static final String[] SET_COLUMN_NAMES_ID = {_ID, COLUMN_CLASS_UNIT, COLUMN_CLASS_UNIT_DESCRIPTION, COLUMN_CLASS_VENUE, COLUMN_CLASS_TYPE, COLUMN_CLASS_DAY, COLUMN_CLASS_START_DATE, COLUMN_CLASS_START_TIME, COLUMN_CLASS_END_TIME, COLUMN_CLASS_STREAM, COLUMN_CLASS_WEEKS};
 
-    static final Integer[] SET_TIMETABLE_DB_ENTRY = {R.id.unit, null, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, R.id.weeks};
-    static final Integer[] SET_TIMETABLE_DB_ENTRY_ID = {null, R.id.unit, null, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, R.id.weeks};
+    static final Integer[] SET_TIMETABLE_DB_ENTRY = {R.id.unit, null, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, null};
+    static final Integer[] SET_TIMETABLE_DB_ENTRY_ID = {null, R.id.unit, null, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, null};
+    static final Integer[] SET_TIMETABLE_DB_ENTRY_DETAILS = {R.id.unit, null, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, null};
+    static final Integer[] SET_TIMETABLE_DB_ENTRY_DETAILS_ID = {R.id.entry_id, R.id.unit, R.id.description, R.id.venue, R.id.type, R.id.day, null, R.id.start, R.id.end, R.id.stream, null};
 
 
     static final String SQL_CREATE_COMMAND =

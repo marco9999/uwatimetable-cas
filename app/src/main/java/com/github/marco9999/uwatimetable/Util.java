@@ -20,8 +20,6 @@ import java.util.Locale;
  */
 class Util {
 
-
-
     static String getDayOfWeek() {
         DateTimeFormatter dayFormat = DateTimeFormat.forPattern("EEEE");
         String day = DateTime.now().toString(dayFormat);

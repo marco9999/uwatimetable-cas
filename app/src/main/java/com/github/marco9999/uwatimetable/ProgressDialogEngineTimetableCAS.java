@@ -20,7 +20,7 @@ public class ProgressDialogEngineTimetableCAS extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         ProgressDialog dialog = new ProgressDialog(getContext());
-        dialog.setMessage(getString(R.string.progress_readingfromcas));
+        dialog.setMessage(getString(R.string.progress_reading_from_cas));
         dialog.setIndeterminate(true);
 
         return dialog;

@@ -10,6 +10,6 @@
     <item
         android:id="@+id/action_resetrange"
         android:orderInCategory="2"
-        android:title="@string/resetrange"
+        android:title="@string/reset_range"
         app:showAsAction="never" />
 </menu>
