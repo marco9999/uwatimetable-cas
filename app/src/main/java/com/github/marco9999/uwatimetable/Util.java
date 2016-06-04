@@ -1,5 +1,8 @@
 package com.github.marco9999.uwatimetable;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -8,6 +11,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +46,12 @@ class Util {
         DateTimeFormatter dayFormatter = DateTimeFormat.forPattern("yyyy/MM/dd");
         return dayFormatter.parseDateTime(date);
     }
+
+    static Intent createIntentURLView(String url) {
+        Uri uri = Uri.parse(url);
+        return new Intent(Intent.ACTION_VIEW, uri);
+    }
+
 }
 
 

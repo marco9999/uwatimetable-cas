@@ -39,7 +39,7 @@
 
             <include layout="@layout/activity_timetable_detail_weeks"/>
 
-            <!-- <include layout="@layout/activity_timetable_detail_extra"/> -->
+            <include layout="@layout/activity_timetable_detail_search" />
 
             <include layout="@layout/activity_timetable_detail_database"/>
         </LinearLayout>

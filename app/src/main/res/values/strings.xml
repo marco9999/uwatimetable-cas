@@ -25,6 +25,9 @@
     <string name="hint_range">Select Range</string>
     <string name="title_timetable_detail">Details</string>
     <string name="no_extra_detail_available">No extra details available.</string>
+    <string name="search_on_uwa">Search on UWA</string>
+    <string name="search_for_venue">Search for the venue</string>
+    <string name="search_for_unit">Search for the unit code</string>
     <string name="unit_details">Unit Details</string>
     <string name="database_details">Database Details</string>
     <string name="date_details">Date Details</string>
